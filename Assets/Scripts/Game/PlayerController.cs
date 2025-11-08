@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +14,12 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 1f;
     public float returnSpeed = 2f;
     public float returnDelay = 0.5f;
+    [Header("Health Settings")]
+    public int frogHealth = 3;
+    public GameObject[] healthIcons;
+    public float hungerLevel = 10f;
+    public Slider hungerMeter;
+    public GameObject gameOverPanel;
 
     private bool isHolding = false;
     private bool isReturning = false;
@@ -47,6 +54,17 @@ public class PlayerController : MonoBehaviour
         if (isHolding)
         {
             MoveTarget();
+        }
+        if (frogHealth != 0)
+        {
+            hungerMeter.value = hungerLevel;
+            hungerLevel -= 0.01f;
+            if (hungerLevel < 1)
+            {
+                frogHealth--;
+                healthIcons[frogHealth - 1].SetActive(false);
+                hungerLevel = 10f;
+            }
         }
     }
 
@@ -90,6 +108,12 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(caughtEnemy);
             caughtEnemy = null;
+            hungerLevel = 10f;
+        }
+        else
+        {
+            healthIcons[frogHealth-1].SetActive(false);
+            frogHealth--;
         }
         t = 0f;
         direction = 1;
