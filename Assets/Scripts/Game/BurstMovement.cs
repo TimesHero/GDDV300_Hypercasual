@@ -9,12 +9,12 @@ public class BurstVelocitySetter : MonoBehaviour
     public float burstIntervalMax = 1.5f; 
     public float burstDuration = 0.2f;
 
-    private VelocitySetter velocitySetter; 
+    private EnemyHandler velocitySetter; 
 
     void Start()
     {
         myRB = GetComponent<Rigidbody2D>();
-        velocitySetter = GetComponent<VelocitySetter>();
+        velocitySetter = GetComponent<EnemyHandler>();
         if (velocitySetter != null)
         {
             StartCoroutine(BurstMovement());

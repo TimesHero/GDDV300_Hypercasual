@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRB: {fileID: 6638829505928597263}
+  scoreValue: 100
 --- !u!50 &6638829505928597263
 Rigidbody2D:
   serializedVersion: 5

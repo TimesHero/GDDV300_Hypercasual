@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,8 +21,14 @@ public class PlayerController : MonoBehaviour
     public float hungerLevel = 10f;
     public float hungerDepleationRate = 0.005f;
     public Slider hungerMeter;
+    [Header("Score Settings")]
+    public int score;
+    public TextMeshProUGUI scoreText;
+    [Header("Game Over Settings")]
     public GameObject gameOverPanel;
-
+    public TextMeshProUGUI endScore;
+    public TextMeshProUGUI endCurrency;
+    public TextMeshProUGUI newHighScore;
     private bool isHolding = false;
     private bool isReturning = false;
     private float t = 0f;      
@@ -69,7 +76,7 @@ public class PlayerController : MonoBehaviour
                 frogHealth--;
                 if (frogHealth==0)
                 {
-                    gameOverPanel.SetActive(true);
+                    GameOver();
                     Time.timeScale = 0;
                 }
             }
@@ -114,17 +121,19 @@ public class PlayerController : MonoBehaviour
         }
         if (caughtEnemy != null)
         {
+            score += caughtEnemy.GetComponent<EnemyHandler>().scoreValue;
+            scoreText.text = $"Score: {score}";
             Destroy(caughtEnemy);
             caughtEnemy = null;
             hungerLevel = 10f;
         }
         else
         {
-            healthIcons[frogHealth-1].SetActive(false);
+            healthIcons[frogHealth - 1].SetActive(false);
             frogHealth--;
-            if (frogHealth==0)
+            if (frogHealth == 0)
             {
-                gameOverPanel.SetActive(true);
+                GameOver();
                 Time.timeScale = 0;
             }
         }
@@ -132,23 +141,40 @@ public class PlayerController : MonoBehaviour
         direction = 1;
         isReturning = false;
     }
-   public void OnTongueHit2D(Collider2D other)
-{
-    if (caughtEnemy == null && other.CompareTag("Enemy"))
+    public void GameOver()
     {
-        caughtEnemy = other.gameObject;
-        caughtEnemy.transform.SetParent(mover);
-        Rigidbody2D rb = caughtEnemy.GetComponent<Rigidbody2D>();
-        if (rb != null)
+        gameOverPanel.SetActive(true);
+        endScore.text = $"Score: {score}";
+        int currencyEarned = score / 10;
+        endCurrency.text = $"Soft Currency Eanred: {currencyEarned}";
+        if (score > PlayerPrefs.GetInt("HighScore", 0)) 
         {
-            rb.linearVelocity = Vector2.zero;    
-            rb.isKinematic = true;        
+            PlayerPrefs.SetInt("HighScore", score);
+            newHighScore.text = "New high score!";
         }
-        VelocitySetter vs = caughtEnemy.GetComponent<VelocitySetter>();
-        if (vs != null)
+
+        int currentCurrency = PlayerPrefs.GetInt("SoftCurrency", 0); 
+        currentCurrency += currencyEarned;
+        PlayerPrefs.SetInt("SoftCurrency", currentCurrency); 
+        PlayerPrefs.Save();
+    }
+   public void OnTongueHit2D(Collider2D other)
+    {
+        if (caughtEnemy == null && other.CompareTag("Enemy"))
         {
-            vs.enabled = false;
+            caughtEnemy = other.gameObject;
+            caughtEnemy.transform.SetParent(mover);
+            Rigidbody2D rb = caughtEnemy.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;    
+                rb.isKinematic = true;        
+            }
+            EnemyHandler vs = caughtEnemy.GetComponent<EnemyHandler>();
+            if (vs != null)
+            {
+                vs.enabled = false;
+            }
         }
     }
-}
 }

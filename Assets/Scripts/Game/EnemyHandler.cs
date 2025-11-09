@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class VelocitySetter : MonoBehaviour
+public class EnemyHandler : MonoBehaviour
 {
     public Rigidbody2D myRB;
+    public int scoreValue; 
     public void SetVelocity(Vector2 targetVelocity)
     {
         myRB = GetComponent<Rigidbody2D>();

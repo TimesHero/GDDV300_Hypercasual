@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         else
             spawnDirection = Vector3.right; 
                 
-        enemy.GetComponent<VelocitySetter>().SetVelocity(spawnDirection*velocity);
+        enemy.GetComponent<EnemyHandler>().SetVelocity(spawnDirection*velocity);
     }
     
 

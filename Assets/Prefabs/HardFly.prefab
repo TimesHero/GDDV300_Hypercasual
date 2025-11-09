@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRB: {fileID: 3243702320510740584}
+  scoreValue: 200
 --- !u!114 &8324344891067624863
 MonoBehaviour:
   m_ObjectHideFlags: 0
