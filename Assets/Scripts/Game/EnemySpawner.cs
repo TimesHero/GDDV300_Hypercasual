@@ -26,9 +26,7 @@ public class EnemySpawner : MonoBehaviour
             int whereSpawn = Random.Range(0,spawnLocations.Length);
             Transform spawnPoint = spawnLocations[whereSpawn];
             GameObject enemy = Instantiate(enemyPrefabs[enemyType], spawnPoint.position, spawnPoint.rotation);
-
             Vector3 spawnDirection;
-            
             if (spawnPoint.position.x > 0f)
                 spawnDirection = Vector3.left;
             else
