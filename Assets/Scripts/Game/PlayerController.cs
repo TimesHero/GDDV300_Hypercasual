@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 1f;
     public float returnSpeed = 2f;
     public float returnDelay = 0.5f;
+    [Header("Health Settings")]
+    public int frogHealth = 3;
+    public GameObject[] healthIcons;
+    public float hungerLevel = 10f;
+    public float hungerDepleationRate = 0.005f;
+    public Slider hungerMeter;
+    public GameObject gameOverPanel;
 
     private bool isHolding = false;
     private bool isReturning = false;
@@ -33,20 +41,38 @@ public class PlayerController : MonoBehaviour
     {
         if (isReturning) return; 
 
-        if (Input.GetMouseButtonDown(0))
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+        if (Input.GetMouseButtonDown(0) && hit.collider != null && hit.collider.gameObject == gameObject)
         {
             isHolding = true;
         }
         if (Input.GetMouseButtonUp(0))
         {
             isHolding = false;
-            mover.position = target.position;
+            mover.position = target.position;  
             StartCoroutine(ReturnToStart());
         }
 
         if (isHolding)
         {
             MoveTarget();
+        }
+        if (frogHealth != 0)
+        {
+            hungerMeter.value = hungerLevel;
+            hungerLevel -= hungerDepleationRate;
+            if (hungerLevel < 1)
+            {
+                hungerLevel = 10f;
+                healthIcons[frogHealth - 1].SetActive(false);
+                frogHealth--;
+                if (frogHealth==0)
+                {
+                    gameOverPanel.SetActive(true);
+                    Time.timeScale = 0;
+                }
+            }
         }
     }
 
@@ -90,6 +116,17 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(caughtEnemy);
             caughtEnemy = null;
+            hungerLevel = 10f;
+        }
+        else
+        {
+            healthIcons[frogHealth-1].SetActive(false);
+            frogHealth--;
+            if (frogHealth==0)
+            {
+                gameOverPanel.SetActive(true);
+                Time.timeScale = 0;
+            }
         }
         t = 0f;
         direction = 1;
