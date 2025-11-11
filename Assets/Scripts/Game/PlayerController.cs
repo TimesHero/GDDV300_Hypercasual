@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
@@ -142,22 +144,54 @@ public class PlayerController : MonoBehaviour
         isReturning = false;
     }
     public void GameOver()
+{
+    gameOverPanel.SetActive(true);
+    endScore.text = $"Score: {score}";
+    int currencyEarned = score / 10;
+    endCurrency.text = $"Soft Currency Earned: {currencyEarned}";
+    List<int> topScores = new List<int>();
+    for (int i = 0; i < 5; i++)
     {
-        gameOverPanel.SetActive(true);
-        endScore.text = $"Score: {score}";
-        int currencyEarned = score / 10;
-        endCurrency.text = $"Soft Currency Eanred: {currencyEarned}";
-        if (score > PlayerPrefs.GetInt("HighScore", 0)) 
-        {
-            PlayerPrefs.SetInt("HighScore", score);
-            newHighScore.text = "New high score!";
-        }
-
-        int currentCurrency = PlayerPrefs.GetInt("SoftCurrency", 0); 
-        currentCurrency += currencyEarned;
-        PlayerPrefs.SetInt("SoftCurrency", currentCurrency); 
-        PlayerPrefs.Save();
+        int savedScore = PlayerPrefs.GetInt("HighScore" + i, 0);
+        topScores.Add(savedScore);
+        Debug.Log($"Loaded score {i}: {savedScore}");
     }
+
+    topScores.Add(score);
+    Debug.Log($"Added current score: {score}");
+    topScores.Sort((a, b) => b.CompareTo(a)); 
+    topScores = topScores.Take(5).ToList(); 
+
+    for (int i = 0; i < topScores.Count; i++)
+    {
+        PlayerPrefs.SetInt("HighScore" + i, topScores[i]);
+        Debug.Log($"Saved top score {i}: {topScores[i]}");
+    }
+
+    if (score >= topScores[0])
+    {
+        newHighScore.text = "New high score!";
+        Debug.Log("New high score achieved!");
+    }
+    else
+    {
+        newHighScore.text = "";
+    }
+
+    int currentCurrency = PlayerPrefs.GetInt("SoftCurrency", 0); 
+    currentCurrency += currencyEarned;
+    PlayerPrefs.SetInt("SoftCurrency", currentCurrency);
+        PlayerPrefs.Save();
+
+    //DEBUG TESTING
+    Debug.Log("Final Top 5 Scores:");
+    for (int i = 0; i < topScores.Count; i++)
+    {
+        Debug.Log($"{i + 1}: {topScores[i]}");
+    }
+}
+
+
    public void OnTongueHit2D(Collider2D other)
     {
         if (caughtEnemy == null && other.CompareTag("Enemy"))
