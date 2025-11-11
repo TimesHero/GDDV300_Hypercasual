@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 targetStartPos;
     private Vector3 moverStartPos;
     private GameObject caughtEnemy = null;
+    public bool bossHit = false;
 
     void Start()
     {
@@ -129,6 +130,10 @@ public class PlayerController : MonoBehaviour
             caughtEnemy = null;
             hungerLevel = 10f;
         }
+        else if (bossHit)
+        {
+            hungerLevel = 10f;
+        }
         else
         {
             healthIcons[frogHealth - 1].SetActive(false);
@@ -142,9 +147,10 @@ public class PlayerController : MonoBehaviour
         t = 0f;
         direction = 1;
         isReturning = false;
+        bossHit = false;
     }
     public void GameOver()
-{
+    {
     gameOverPanel.SetActive(true);
     endScore.text = $"Score: {score}";
     int currencyEarned = score / 10;
