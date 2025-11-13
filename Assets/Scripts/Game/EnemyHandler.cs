@@ -11,11 +11,12 @@ public class EnemyHandler : MonoBehaviour
         myRB.linearVelocity = targetVelocity;
         StartCoroutine(KillTimer());
     }
-    
+
     private IEnumerator KillTimer()
     {
         yield return new WaitForSeconds(10f);
         Destroy(gameObject);
     }
+   
     
 }
