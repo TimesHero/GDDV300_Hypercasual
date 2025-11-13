@@ -30,10 +30,18 @@ public class EnemySpawner : MonoBehaviour
         float totalWeight = spawnWeights.Sum();
         float randomValue = Random.Range(0f, totalWeight);
         int enemyType = (randomValue < spawnWeights[0]) ? 0 : 1; 
-            
         int whereSpawn = Random.Range(0,spawnLocations.Length);
         Transform spawnPoint = spawnLocations[whereSpawn];
-        GameObject enemy = Instantiate(enemyPrefabs[enemyType], spawnPoint.position, spawnPoint.rotation);
+        int isPoisonType = Random.Range(0,8);
+        GameObject enemy = null; 
+        if (isPoisonType==2)
+        {
+            enemy = Instantiate(enemyPrefabs[isPoisonType], spawnPoint.position, spawnPoint.rotation);
+        }
+        else
+        {
+            enemy = Instantiate(enemyPrefabs[enemyType], spawnPoint.position, spawnPoint.rotation);
+        }
         Vector3 spawnDirection;
         if (spawnPoint.position.x > 0f)
             spawnDirection = Vector3.left;

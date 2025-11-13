@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using System.Linq;
+using NUnit.Framework;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,8 +19,6 @@ public class PlayerController : MonoBehaviour
     public float returnSpeed = 2f;
     public float returnDelay = 0.5f;
     [Header("Health Settings")]
-    public int frogHealth = 3;
-    public GameObject[] healthIcons;
     public float hungerLevel = 10f;
     public float hungerDepleationRate = 0.005f;
     public Slider hungerMeter;
@@ -31,6 +30,9 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI endScore;
     public TextMeshProUGUI endCurrency;
     public TextMeshProUGUI newHighScore;
+    public bool isPoisoned;
+    private float poisonSpeed = 0;
+    public float poisonValue = 0.5f;
     private bool isHolding = false;
     private bool isReturning = false;
     private float t = 0f;      
@@ -40,6 +42,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 moverStartPos;
     private GameObject caughtEnemy = null;
     public bool bossHit = false;
+    private int ateWhilePoisoned = 0;
 
     void Start()
     {
@@ -49,6 +52,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        hungerMeter.value = hungerLevel;
+        hungerLevel -= hungerDepleationRate;
+        if (hungerLevel < 1)
+        {
+            GameOver();    
+        }
         if (isReturning) return; 
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -57,7 +66,7 @@ public class PlayerController : MonoBehaviour
         {
             isHolding = true;
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0)&&isHolding)
         {
             isHolding = false;
             mover.position = target.position;  
@@ -68,27 +77,16 @@ public class PlayerController : MonoBehaviour
         {
             MoveTarget();
         }
-        if (frogHealth != 0)
-        {
-            hungerMeter.value = hungerLevel;
-            hungerLevel -= hungerDepleationRate;
-            if (hungerLevel < 1)
-            {
-                hungerLevel = 10f;
-                healthIcons[frogHealth - 1].SetActive(false);
-                frogHealth--;
-                if (frogHealth==0)
-                {
-                    GameOver();
-                    Time.timeScale = 0;
-                }
-            }
-        }
+
+        
     }
 
     void MoveTarget()
     {
         t += direction * moveSpeed * Time.deltaTime;
+        if (isPoisoned)
+            t += direction * moveSpeed*  -0.5f * Time.deltaTime;
+        
         if (t > 1f)
         {
             t = 1f;
@@ -114,7 +112,21 @@ public class PlayerController : MonoBehaviour
 
         while (elapsed < 1f)
         {
-            elapsed += Time.deltaTime * returnSpeed;
+            if (isPoisoned)
+            {
+                if (caughtEnemy != null)
+                    elapsed += Time.deltaTime * returnSpeed * 0.5f;
+                else
+                    elapsed += Time.deltaTime * returnSpeed * 0.5f / 3;
+            }
+            else
+            {
+                if (caughtEnemy != null)
+                    elapsed += Time.deltaTime * returnSpeed;
+                else
+                    elapsed += Time.deltaTime * returnSpeed / 3;
+            }
+                
             float lerpT = Mathf.Clamp01(elapsed);
 
             target.position = Vector3.Lerp(targetInitial, targetStartPos, lerpT);
@@ -128,26 +140,26 @@ public class PlayerController : MonoBehaviour
             scoreText.text = $"Score: {score}";
             Destroy(caughtEnemy);
             caughtEnemy = null;
-            hungerLevel = 10f;
+            hungerLevel += 1.5f;
+            if (hungerLevel>10)
+                hungerLevel=10f;
+            ateWhilePoisoned++;
+            if (ateWhilePoisoned==4)
+            {
+                isPoisoned=false;
+                ateWhilePoisoned=0;
+            }
         }
         else if (bossHit)
         {
             hungerLevel = 10f;
         }
-        else
-        {
-            healthIcons[frogHealth - 1].SetActive(false);
-            frogHealth--;
-            if (frogHealth == 0)
-            {
-                GameOver();
-                Time.timeScale = 0;
-            }
-        }
         t = 0f;
         direction = 1;
         isReturning = false;
         bossHit = false;
+
+    
     }
     public void GameOver()
     {
@@ -204,6 +216,10 @@ public class PlayerController : MonoBehaviour
         {
             caughtEnemy = other.gameObject;
             caughtEnemy.transform.SetParent(mover);
+            if (caughtEnemy.GetComponent<EnemyHandler>().applyPoison)
+            {
+                isPoisoned = true;
+            }
             Rigidbody2D rb = caughtEnemy.GetComponent<Rigidbody2D>();
             if (rb != null)
             {

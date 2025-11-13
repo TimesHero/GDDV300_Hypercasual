@@ -9,6 +9,7 @@ public class TongueCollider2D : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
+            
             playerController?.OnTongueHit2D(other);
         }
         if (other.CompareTag("Boss"))
