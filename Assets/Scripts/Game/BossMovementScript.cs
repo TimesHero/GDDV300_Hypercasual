@@ -12,8 +12,10 @@ public class BossMovementScript : MonoBehaviour
     private Vector2 moveDirection;
     private Rigidbody2D rb;
     private bool isBursting = false;
+    private EnemySpawner enemySpawner;
     void Start()
     {
+        enemySpawner = FindObjectOfType<EnemySpawner>();
         rb = GetComponent<Rigidbody2D>();
         currentHP = maxHP;
         StartCoroutine(MoveRoutine());
@@ -68,6 +70,7 @@ public class BossMovementScript : MonoBehaviour
     void Die()
     {
         Debug.Log("Boss defeated!");
+        enemySpawner.DefeatedBoss();
         Destroy(gameObject);
     }
 

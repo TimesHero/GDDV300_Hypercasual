@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     private GameObject caughtEnemy = null;
     public bool bossHit = false;
     private int ateWhilePoisoned = 0;
-
+    public EnemySpawner enemySpawner;
     void Start()
     {
         targetStartPos = target.position;
@@ -140,7 +140,8 @@ public class PlayerController : MonoBehaviour
             scoreText.text = $"Score: {score}";
             Destroy(caughtEnemy);
             caughtEnemy = null;
-            hungerLevel += 1.5f;
+            hungerLevel += 2.5f;
+            enemySpawner.enemiesKilled++;
             if (hungerLevel>10)
                 hungerLevel=10f;
             ateWhilePoisoned++;
