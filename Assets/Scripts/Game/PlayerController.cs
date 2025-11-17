@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
     public EnemySpawner enemySpawner;
     void Start()
     {
+        Time.timeScale = 1f;
         targetStartPos = target.position;
         moverStartPos = mover.position;
     }
