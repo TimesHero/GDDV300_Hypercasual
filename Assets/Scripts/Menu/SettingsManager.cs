@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
-public class MenuManager: MonoBehaviour
+public class SettingsManager: MonoBehaviour
 {
     public GameObject settingsPanel;
 
