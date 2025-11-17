@@ -52,10 +52,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        hungerMeter.value = hungerLevel;
-        hungerLevel -= hungerDepleationRate;
+        if (Time.timeScale==1)
+        {
+            hungerMeter.value = hungerLevel;
+            hungerLevel -= hungerDepleationRate;
+        }
         if (hungerLevel < 1)
         {
+            if (!gameOverPanel.activeInHierarchy)
             GameOver();    
         }
         if (isReturning) return; 

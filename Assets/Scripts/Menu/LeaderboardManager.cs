@@ -1,113 +1,47 @@
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
-[System.Serializable]
-public class ScoreEntry
+public class Leaderboardmanager: MonoBehaviour
 {
-    public string playerName;
-    public int score;
+    [Header("UI References")]
+    public GameObject entryPrefab;      
+    public Transform entryContainer;  
 
-    public ScoreEntry(string playerName, int score)
+    private const int MaxEntries = 5;
+
+    void Start()
     {
-        this.playerName = playerName;
-        this.score = score;
+        PopulateLeaderboard();
     }
-}
 
-public class LeaderboardManager : MonoBehaviour
-{
-    [Header("Interface References")]
-    [SerializeField] private GameObject leaderboardPanel;
-    [SerializeField] private Transform entryContainer;
-    [SerializeField] private GameObject entryPrefab;
-    [SerializeField] private int maxEntries = 5;
-    [SerializeField] private PlayerController playerController;
-
-    // Backing list used by SortScores and RefreshUI
-    private List<ScoreEntry> scores = new List<ScoreEntry>();
-
-    // Load scores from PlayerPrefs (written by PlayerController) into the list
-    private void LoadScoresFromPrefs()
+    void PopulateLeaderboard()
     {
-        scores.Clear();
-
-        for (int i = 0; i < maxEntries; i++)
+        foreach (Transform child in entryContainer)
         {
-            int savedScore = PlayerPrefs.GetInt("HighScore" + i, 0);
-
-            if (savedScore > 0)
-            {
-                // No names are stored, so this is just a placeholder
-                string playerName = "Player " + (i + 1);
-                scores.Add(new ScoreEntry(playerName, savedScore));
-            }
+            Destroy(child.gameObject);
         }
 
-        SortScores();
-    }
-
-    // Optional: add a score at runtime (if you ever need it)
-    public void AddScore(string playerName, int scoreValue)
-    {
-        scores.Add(new ScoreEntry(playerName, scoreValue));
-        SortScores();
-        RefreshUI();
-    }
-
-    public void ShowLeaderboard()
-    {
-        LoadScoresFromPrefs();
-        RefreshUI();
-
-        if (leaderboardPanel != null)
+        List<int> scores = new List<int>();
+        for (int i = 0; i < MaxEntries; i++)
         {
-            leaderboardPanel.SetActive(true);
-        }
-    }
-
-    public void HideLeaderboard()
-    {
-        if (leaderboardPanel != null)
-        {
-            leaderboardPanel.SetActive(false);
-        }
-    }
-
-    private void SortScores()
-    {
-        scores.Sort((a, b) => b.score.CompareTo(a.score));
-    }
-
-    private void RefreshUI()
-    {
-        if (entryContainer == null || entryPrefab == null)
-            return;
-
-        // Clear existing rows
-        for (int i = entryContainer.childCount - 1; i >= 0; i--)
-        {
-            Destroy(entryContainer.GetChild(i).gameObject);
+            int s = PlayerPrefs.GetInt("HighScore" + i, 0);
+            scores.Add(s);
         }
 
-        int count = Mathf.Min(scores.Count, maxEntries);
+        scores.Sort((a, b) => b.CompareTo(a));
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < MaxEntries; i++)
         {
-            ScoreEntry entry = scores[i];
+            GameObject newEntry = Instantiate(entryPrefab, entryContainer);
 
-            GameObject row = Instantiate(entryPrefab, entryContainer);
+            TMP_Text[] tmpTexts = newEntry.GetComponentsInChildren<TMP_Text>();
 
-            // Assumes the prefab has at least three TMP_Text components
-            TMP_Text[] texts = row.GetComponentsInChildren<TMP_Text>();
+            TMP_Text rankText = tmpTexts[0];
+            TMP_Text scoreText = tmpTexts[1];
 
-            if (texts.Length >= 3)
-            {
-                // 0: rank, 1: name, 2: score
-                texts[0].text = (i + 1).ToString() + ".";
-                texts[1].text = entry.playerName;
-                texts[2].text = entry.score.ToString();
-            }
+            rankText.text = (i + 1).ToString() + ".";  
+            scoreText.text = scores[i].ToString();
         }
     }
 }
