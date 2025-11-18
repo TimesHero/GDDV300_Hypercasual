@@ -46,18 +46,14 @@ public class PlayerController : MonoBehaviour
     public EnemySpawner enemySpawner;
     void Start()
     {
+        Time.timeScale = 1f;
+        StartCoroutine(HungerDrain());
         targetStartPos = target.position;
         moverStartPos = mover.position;
     }
 
     void Update()
     {
-        hungerMeter.value = hungerLevel;
-        hungerLevel -= hungerDepleationRate;
-        if (hungerLevel < 1)
-        {
-            GameOver();    
-        }
         if (isReturning) return; 
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -80,6 +76,27 @@ public class PlayerController : MonoBehaviour
 
         
     }
+    IEnumerator HungerDrain()
+    {
+        while (true)
+        {
+            if (Time.timeScale == 1f)
+            {
+                hungerLevel -= hungerDepleationRate * Time.deltaTime; 
+                hungerMeter.value = hungerLevel;
+
+                if (hungerLevel <= 0)
+                {
+                    hungerLevel = 0;
+                    if (!gameOverPanel.activeInHierarchy)
+                        GameOver();
+                }
+            }
+
+            yield return null;
+        }
+    }
+
 
     void MoveTarget()
     {
@@ -164,50 +181,51 @@ public class PlayerController : MonoBehaviour
     }
     public void GameOver()
     {
-    gameOverPanel.SetActive(true);
-    endScore.text = $"Score: {score}";
-    int currencyEarned = score / 10;
-    endCurrency.text = $"Soft Currency Earned: {currencyEarned}";
-    List<int> topScores = new List<int>();
-    for (int i = 0; i < 5; i++)
-    {
-        int savedScore = PlayerPrefs.GetInt("HighScore" + i, 0);
-        topScores.Add(savedScore);
-        Debug.Log($"Loaded score {i}: {savedScore}");
-    }
+        Time.timeScale=0f;
+        gameOverPanel.SetActive(true);
+        endScore.text = $"Score: {score}";
+        int currencyEarned = score / 10;
+        endCurrency.text = $"Soft Currency Earned: {currencyEarned}";
+        List<int> topScores = new List<int>();
+        for (int i = 0; i < 5; i++)
+        {
+            int savedScore = PlayerPrefs.GetInt("HighScore" + i, 0);
+            topScores.Add(savedScore);
+            Debug.Log($"Loaded score {i}: {savedScore}");
+        }
 
-    topScores.Add(score);
-    Debug.Log($"Added current score: {score}");
-    topScores.Sort((a, b) => b.CompareTo(a)); 
-    topScores = topScores.Take(5).ToList(); 
+        topScores.Add(score);
+        Debug.Log($"Added current score: {score}");
+        topScores.Sort((a, b) => b.CompareTo(a)); 
+        topScores = topScores.Take(5).ToList(); 
 
-    for (int i = 0; i < topScores.Count; i++)
-    {
-        PlayerPrefs.SetInt("HighScore" + i, topScores[i]);
-        Debug.Log($"Saved top score {i}: {topScores[i]}");
-    }
+        for (int i = 0; i < topScores.Count; i++)
+        {
+            PlayerPrefs.SetInt("HighScore" + i, topScores[i]);
+            Debug.Log($"Saved top score {i}: {topScores[i]}");
+        }
 
-    if (score >= topScores[0])
-    {
-        newHighScore.text = "New high score!";
-        Debug.Log("New high score achieved!");
-    }
-    else
-    {
-        newHighScore.text = "";
-    }
+        if (score >= topScores[0])
+        {
+            newHighScore.text = "New high score!";
+            Debug.Log("New high score achieved!");
+        }
+        else
+        {
+            newHighScore.text = "";
+        }
 
-    int currentCurrency = PlayerPrefs.GetInt("SoftCurrency", 0); 
-    currentCurrency += currencyEarned;
-    PlayerPrefs.SetInt("SoftCurrency", currentCurrency);
-        PlayerPrefs.Save();
+        int currentCurrency = PlayerPrefs.GetInt("SoftCurrency", 0); 
+        currentCurrency += currencyEarned;
+        PlayerPrefs.SetInt("SoftCurrency", currentCurrency);
+            PlayerPrefs.Save();
 
-    //DEBUG TESTING
-    Debug.Log("Final Top 5 Scores:");
-    for (int i = 0; i < topScores.Count; i++)
-    {
-        Debug.Log($"{i + 1}: {topScores[i]}");
-    }
+        //DEBUG TESTING
+        Debug.Log("Final Top 5 Scores:");
+        for (int i = 0; i < topScores.Count; i++)
+        {
+            Debug.Log($"{i + 1}: {topScores[i]}");
+        }
 }
 
 
