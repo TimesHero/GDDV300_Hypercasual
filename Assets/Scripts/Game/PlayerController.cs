@@ -47,22 +47,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
+        StartCoroutine(HungerDrain());
         targetStartPos = target.position;
         moverStartPos = mover.position;
     }
 
     void Update()
     {
-        if (Time.timeScale==1)
-        {
-            hungerMeter.value = hungerLevel;
-            hungerLevel -= hungerDepleationRate;
-        }
-        if (hungerLevel <=0)
-        {
-            if (!gameOverPanel.activeInHierarchy)
-            GameOver();    
-        }
         if (isReturning) return; 
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -85,6 +76,27 @@ public class PlayerController : MonoBehaviour
 
         
     }
+    IEnumerator HungerDrain()
+    {
+        while (true)
+        {
+            if (Time.timeScale == 1f)
+            {
+                hungerLevel -= hungerDepleationRate * Time.deltaTime; 
+                hungerMeter.value = hungerLevel;
+
+                if (hungerLevel <= 0)
+                {
+                    hungerLevel = 0;
+                    if (!gameOverPanel.activeInHierarchy)
+                        GameOver();
+                }
+            }
+
+            yield return null;
+        }
+    }
+
 
     void MoveTarget()
     {

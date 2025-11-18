@@ -103,10 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c032eb668fb3f5748abc328f73b8d502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 5
   speedIncrease: 0.5
   burstDuration: 1
-  pauseDuration: 0.5
+  pauseDuration: 0.1
   maxHP: 5
 --- !u!114 &473197108955572494
 MonoBehaviour:
@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRB: {fileID: 1303062531940203970}
   scoreValue: 100
+  applyPoison: 0
 --- !u!50 &1303062531940203970
 Rigidbody2D:
   serializedVersion: 5
@@ -130,7 +131,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324533738088508812}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

@@ -13,6 +13,8 @@ public class BossMovementScript : MonoBehaviour
     private Rigidbody2D rb;
     private bool isBursting = false;
     private EnemySpawner enemySpawner;
+
+    [System.Obsolete]
     void Start()
     {
         enemySpawner = FindObjectOfType<EnemySpawner>();
@@ -21,7 +23,6 @@ public class BossMovementScript : MonoBehaviour
         StartCoroutine(MoveRoutine());
     }
 
-    // Update is called once per frame
     void Update()
     {
 
