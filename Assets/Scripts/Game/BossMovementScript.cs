@@ -13,6 +13,9 @@ public class BossMovementScript : MonoBehaviour
     private Rigidbody2D rb;
     private bool isBursting = false;
     private EnemySpawner enemySpawner;
+    public bool isStunned = false;
+    public float stunDuration = 1.5f;
+
 
     [System.Obsolete]
     void Start()
@@ -54,19 +57,29 @@ public class BossMovementScript : MonoBehaviour
             moveDirection = Vector2.Reflect(moveDirection, collision.contacts[0].normal).normalized;
         }
     }
-    public void TakeDamage(int amount)
+   public void TakeDamage(int amount)
     {
+        if (isStunned) return; 
+
         currentHP -= amount;
+        Debug.Log(currentHP);
 
         if (currentHP <= 0)
         {
             Die();
+            return;
         }
-        else
-        {
-            moveSpeed += speedIncrease;
-        }
+        moveSpeed += speedIncrease;
+        StartCoroutine(StunRoutine());
     }
+    private IEnumerator StunRoutine()
+    {
+        isStunned = true;
+        yield return new WaitForSeconds(stunDuration);
+        isStunned = false;
+    }
+
+
 
     void Die()
     {
