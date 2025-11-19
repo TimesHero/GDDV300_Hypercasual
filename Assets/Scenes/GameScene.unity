@@ -5019,6 +5019,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 3879892}
     m_Modifications:
     - target: {fileID: 1403465153690533636, guid: d3b698399da28f2cda8a4b093bac2229, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.1999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403465153690533636, guid: d3b698399da28f2cda8a4b093bac2229, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3.1999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403465153690533636, guid: d3b698399da28f2cda8a4b093bac2229, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403465153690533636, guid: d3b698399da28f2cda8a4b093bac2229, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -5108,7 +5120,7 @@ PrefabInstance:
       objectReference: {fileID: 216263248}
     - target: {fileID: 4671766467811868952, guid: d3b698399da28f2cda8a4b093bac2229, type: 3}
       propertyPath: hungerDepleationRate
-      value: 1
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
