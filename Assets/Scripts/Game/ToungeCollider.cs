@@ -123,11 +123,11 @@ public class TongueCollider2D : MonoBehaviour
         // Deal damage
         if (success)
         {
-            currentBoss.TakeDamage(3); 
+            currentBoss.TakeDamage(500); 
         }
         else
         {
-            currentBoss.TakeDamage(1); 
+            currentBoss.TakeDamage(250); 
         }
 
         playerController.bossHit = true;

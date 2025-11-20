@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRB: {fileID: 8226363004954668672}
-  scoreValue: 100
+  scoreValue: -300
   applyPoison: 1
 --- !u!50 &8226363004954668672
 Rigidbody2D:

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 public class BossMovementScript : MonoBehaviour
 {
     public float moveSpeed = 3f;
@@ -15,6 +16,7 @@ public class BossMovementScript : MonoBehaviour
     private EnemySpawner enemySpawner;
     public bool isStunned = false;
     public float stunDuration = 1.5f;
+    private Slider progress;
 
 
     [System.Obsolete]
@@ -23,6 +25,8 @@ public class BossMovementScript : MonoBehaviour
         enemySpawner = FindObjectOfType<EnemySpawner>();
         rb = GetComponent<Rigidbody2D>();
         currentHP = maxHP;
+        GameObject progressBarObject = GameObject.FindGameObjectWithTag("ProgressBar");
+        progress = progressBarObject.GetComponent<Slider>();
         StartCoroutine(MoveRoutine());
     }
 
@@ -63,7 +67,7 @@ public class BossMovementScript : MonoBehaviour
 
         currentHP -= amount;
         Debug.Log(currentHP);
-
+        progress.value = currentHP;
         if (currentHP <= 0)
         {
             Die();
