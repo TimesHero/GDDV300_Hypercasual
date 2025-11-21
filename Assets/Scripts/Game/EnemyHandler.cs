@@ -4,51 +4,28 @@ using UnityEngine;
 public class EnemyHandler : MonoBehaviour
 {
     public Rigidbody2D myRB;
-    public int scoreValue;
+    public int scoreValue; 
     public bool applyPoison;
-    private Camera mainCamera;
-    private bool isOnScreen = true; 
-    private Coroutine killTimerCoroutine; 
-    private float timer = 10f;
-
-    void Start()
-    {
-        myRB = GetComponent<Rigidbody2D>();
-        mainCamera = Camera.main;
-        killTimerCoroutine = StartCoroutine(KillTimer());
-    }
-
+    public Animator animator;
     public void SetVelocity(Vector2 targetVelocity)
     {
+        myRB = GetComponent<Rigidbody2D>();
         myRB.linearVelocity = targetVelocity;
+        StartCoroutine(KillTimer());
     }
 
     private IEnumerator KillTimer()
     {
-        while (true)
-        {
-            if (IsOnScreen())
-            {
-                timer -= Time.deltaTime;
-            }
-            if (timer <= 0f && !IsOnScreen())
-            {
-                Destroy(gameObject);
-                yield break; 
-            }
-
-            if (timer <= 0f && IsOnScreen())
-            {
-                timer = 10f; 
-            }
-
-            yield return null;
-        }
+        yield return new WaitForSeconds(10f);
+        Destroy(gameObject);
     }
-
-    private bool IsOnScreen()
+    public void Die()
     {
-        Vector3 viewportPosition = mainCamera.WorldToViewportPoint(transform.position);
-        return viewportPosition.x >= 0 && viewportPosition.x <= 1 && viewportPosition.y >= 0 && viewportPosition.y <= 1;
+        Destroy(gameObject);
     }
+    public void Leave()
+    {
+         animator.enabled = true;
+    }
+
 }
