@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 public class BossMovementScript : MonoBehaviour
 {
+    public Animator animator; 
     public float moveSpeed = 3f;
     public float speedIncrease = 0.5f;
     public float burstDuration = 0.3f;
@@ -27,12 +28,13 @@ public class BossMovementScript : MonoBehaviour
         currentHP = maxHP;
         GameObject progressBarObject = GameObject.FindGameObjectWithTag("ProgressBar");
         progress = progressBarObject.GetComponent<Slider>();
-        StartCoroutine(MoveRoutine());
+        StartCoroutine(WaitForAnimation());
     }
-
-    void Update()
+    private IEnumerator WaitForAnimation()
     {
-
+        yield return new WaitForSeconds(1f);
+        animator.enabled = false;
+        StartCoroutine(MoveRoutine());
     }
     private IEnumerator MoveRoutine()
     {
