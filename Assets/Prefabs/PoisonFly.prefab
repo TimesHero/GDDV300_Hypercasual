@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 234848596750639892}
   - component: {fileID: 8226363004954668672}
   - component: {fileID: 5630443787840494232}
+  - component: {fileID: 8633720973033824286}
   m_Layer: 0
   m_Name: PoisonFly
   m_TagString: Enemy
@@ -103,8 +104,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRB: {fileID: 8226363004954668672}
-  scoreValue: 100
+  scoreValue: -300
   applyPoison: 1
+  animator: {fileID: 8633720973033824286}
 --- !u!50 &8226363004954668672
 Rigidbody2D:
   serializedVersion: 5
@@ -168,3 +170,25 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: -0.26}
   m_Radius: 1.5
+--- !u!95 &8633720973033824286
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504854744327182804}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5a9c93f7194812045b97c920aed1215d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
