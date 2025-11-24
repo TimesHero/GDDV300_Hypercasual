@@ -71,3 +71,24 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 *.apiupaterconfigs
+
+# Ignore Android build directories
+/[Bb]uilds/Android/
+
+# Ignore any generated Gradle build artifacts
+/**/build/
+*.aab
+*.apk
+*.obb
+
+# Ignore additional Unity auto-generated files
+/[Aa]ssets/**/Plugin~/
+*.jar
+
+# Ignore IntelliJ IDEA files
+.idea/
+*.iml
+
+# To prevent more unwanted files in the project
+*.log
+

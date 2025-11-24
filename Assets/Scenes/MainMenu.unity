@@ -460,8 +460,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Settings
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
-  m_sharedMaterial: {fileID: -5758444878289675358, guid: 97c581d6784bef349925ab6675646724, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
+  m_sharedMaterial: {fileID: -7965170953878230937, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1554,8 +1554,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Quit
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
-  m_sharedMaterial: {fileID: -5758444878289675358, guid: 97c581d6784bef349925ab6675646724, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
+  m_sharedMaterial: {fileID: -7965170953878230937, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1690,8 +1690,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
-  m_sharedMaterial: {fileID: -5758444878289675358, guid: 97c581d6784bef349925ab6675646724, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
+  m_sharedMaterial: {fileID: -7965170953878230937, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1793,7 +1793,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706841252}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.8071}
+  m_LocalPosition: {x: 0, y: 0, z: -3.3767}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1801,8 +1801,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67, y: 0.000025749}
-  m_SizeDelta: {x: 3469.5527, y: 1920}
+  m_AnchoredPosition: {x: -250, y: 76}
+  m_SizeDelta: {x: 6483.077, y: 3587.6401}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1706841254
 MonoBehaviour:
@@ -1901,8 +1901,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: High Scores
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
-  m_sharedMaterial: {fileID: -5758444878289675358, guid: 97c581d6784bef349925ab6675646724, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
+  m_sharedMaterial: {fileID: -7965170953878230937, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2380,10 +2380,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingsPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 255684435468226118, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 384988139240097300, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 447772578161666003, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
     - target: {fileID: 447772578161666003, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
@@ -2392,10 +2400,14 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1656189764}
+    - target: {fileID: 1422568684596399115, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1967107409443781285, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
     - target: {fileID: 1967107409443781285, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
@@ -2480,6 +2492,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4659553887435938368, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4959737833460685577, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -2487,7 +2503,7 @@ PrefabInstance:
     - target: {fileID: 5470896406149312253, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
     - target: {fileID: 5470896406149312253, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
@@ -2499,7 +2515,7 @@ PrefabInstance:
     - target: {fileID: 6757968685395570002, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
     - target: {fileID: 6757968685395570002, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
@@ -2511,10 +2527,14 @@ PrefabInstance:
     - target: {fileID: 6999378287163720883, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
     - target: {fileID: 6999378287163720883, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7432340566274653566, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8029419652729642724, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2523,7 +2543,7 @@ PrefabInstance:
     - target: {fileID: 9109538215718244699, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 97c581d6784bef349925ab6675646724, type: 2}
+      objectReference: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
     - target: {fileID: 9109538215718244699, guid: a7935432e18cbcf85aa649f7c3295553, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
@@ -2629,6 +2649,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6628764759170506967, guid: 9b037b1e46fa6a840a5411acdc127e7a, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 7d81ca3c841e2d9428fbe868e90a34d1, type: 2}
     - target: {fileID: 7062929185777496256, guid: 9b037b1e46fa6a840a5411acdc127e7a, type: 3}
       propertyPath: m_Name
       value: LeaderboardPanel
