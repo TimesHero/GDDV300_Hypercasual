@@ -22,14 +22,14 @@ public class SettingsManager: MonoBehaviour
         }
     }
 
-    public void ShowPanel()
+    public void ShowPanel(GameObject panel)
     {
-        settingsPanel.SetActive(true);
+        panel.SetActive(true);
     }
     
-    public void HidePanel()
+    public void HidePanel(GameObject panel)
     {
-        settingsPanel.SetActive(false);
+        panel.SetActive(false);
     }
 
     public void ExitGame()
