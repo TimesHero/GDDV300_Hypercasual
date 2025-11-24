@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0e1b33c1e095f344bbabb7e0ce080081
+guid: e04494b5a51e34e40bf0c7030ad85fb0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6216156608570765218
-    second: Frog_tongue_length_0
+      213: -4737476504074064609
+    second: frogCursorPoisoned_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frog_tongue_length_0
+      name: frogCursorPoisoned_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 0
-        width: 12
-        height: 32
+        x: 0
+        y: 2
+        width: 32
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2afae0a3089344650800000000000000
-      internalID: 6216156608570765218
+      spriteID: f1de7e2483a114eb0800000000000000
+      internalID: -4737476504074064609
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Frog_tongue_length_0: 6216156608570765218
+      frogCursorPoisoned_0: -4737476504074064609
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
