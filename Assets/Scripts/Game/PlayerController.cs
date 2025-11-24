@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-        if (Input.GetMouseButtonDown(0) && hit.collider != null && hit.collider.gameObject == gameObject)
+        if (Input.GetMouseButtonDown(0))
         {
             isHolding = true;
         }
@@ -262,7 +262,11 @@ public class PlayerController : MonoBehaviour
         if (caughtEnemy == null && other.CompareTag("Enemy"))
         {
             caughtEnemy = other.gameObject;
-            caughtEnemy.transform.SetParent(mover);
+            Animator anim = caughtEnemy.GetComponent<Animator>();
+            anim.enabled = false;
+            caughtEnemy.transform.SetParent(mover, true); // Keep world scale
+
+
             if (caughtEnemy.GetComponent<EnemyHandler>().applyPoison)
             {
                 isPoisoned = true;

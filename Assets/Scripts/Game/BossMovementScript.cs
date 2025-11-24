@@ -18,7 +18,10 @@ public class BossMovementScript : MonoBehaviour
     public bool isStunned = false;
     public float stunDuration = 1.5f;
     private Slider progress;
-
+    public float startScale = 11f;
+    public float endScale = 10f;
+    public float duration = 1f;
+    private SpriteRenderer spriteRenderer;
 
     [System.Obsolete]
     void Start()
@@ -28,14 +31,41 @@ public class BossMovementScript : MonoBehaviour
         currentHP = maxHP;
         GameObject progressBarObject = GameObject.FindGameObjectWithTag("ProgressBar");
         progress = progressBarObject.GetComponent<Slider>();
-        StartCoroutine(WaitForAnimation());
+         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        transform.localScale = Vector3.one * startScale;
+        Color color = spriteRenderer.color;
+        color.a = 0f;
+        spriteRenderer.color = color;
+        StartCoroutine(Appear());
     }
-    private IEnumerator WaitForAnimation()
+      private IEnumerator Appear()
     {
-        yield return new WaitForSeconds(1f);
-        animator.enabled = false;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+
+            float scale = Mathf.Lerp(startScale, endScale, t);
+            transform.localScale = Vector3.one * scale;
+
+            Color color = spriteRenderer.color;
+            color.a = Mathf.Lerp(0f, 1f, t);
+            spriteRenderer.color = color;
+
+            yield return null;
+        }
+
+        transform.localScale = Vector3.one * endScale;
+        Color finalColor = spriteRenderer.color;
+        finalColor.a = 1f;
+        spriteRenderer.color = finalColor;
         StartCoroutine(MoveRoutine());
     }
+   
     private IEnumerator MoveRoutine()
     {
         while (true)

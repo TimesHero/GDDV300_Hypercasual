@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.120043814, y: -0.25946784, z: 0}
-  m_LocalScale: {x: 3.83, y: 3.83, z: 19.15}
+  m_LocalScale: {x: 6, y: 6, z: 30}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,6 +107,7 @@ MonoBehaviour:
   scoreValue: -300
   applyPoison: 1
   animator: {fileID: 8633720973033824286}
+  isGrabbed: 0
 --- !u!50 &8226363004954668672
 Rigidbody2D:
   serializedVersion: 5
@@ -178,9 +179,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2504854744327182804}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5a9c93f7194812045b97c920aed1215d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 09eaba99511ef7d4eb278b7d40a27e4b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

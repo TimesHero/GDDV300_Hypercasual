@@ -7,11 +7,19 @@ public class EnemyHandler : MonoBehaviour
     public int scoreValue; 
     public bool applyPoison;
     public Animator animator;
+    public bool isGrabbed;
     public void SetVelocity(Vector2 targetVelocity)
     {
         myRB = GetComponent<Rigidbody2D>();
         myRB.linearVelocity = targetVelocity;
         StartCoroutine(KillTimer());
+    }
+    void Update()
+    {
+        if (isGrabbed)
+        {
+           transform.localScale = new Vector3(0.5f, 0.5f, 1f);
+        }
     }
 
     private IEnumerator KillTimer()
@@ -25,7 +33,7 @@ public class EnemyHandler : MonoBehaviour
     }
     public void Leave()
     {
-         animator.enabled = true;
+        animator.SetBool("Die", true);
     }
 
 }
