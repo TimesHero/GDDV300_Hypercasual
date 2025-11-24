@@ -5,7 +5,8 @@ using TMPro;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
-
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 public class PlayerController : MonoBehaviour
 {
     [Header("References")]
@@ -30,9 +31,19 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI endScore;
     public TextMeshProUGUI endCurrency;
     public TextMeshProUGUI newHighScore;
+    [Header("PoisonSettings")]
     public bool isPoisoned;
     private float poisonSpeed = 0;
     public float poisonValue = 0.5f;
+    public Volume postProcessVolume; 
+    private LensDistortion lensDistortion;
+    public float intensity = 0.5f;
+    public float warbleSpeed = 5f;
+    private float targetWarbleIntensity = 0f; // Target intensity of the warble
+    private float currentWarbleIntensity = 0f; // Current intensity of the warble
+    public float warbleSmoothness = 5f; // The smoothness factor (higher = smoother)
+
+    //Private settings
     private bool isHolding = false;
     private bool isReturning = false;
     private float t = 0f;      
@@ -50,10 +61,27 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(HungerDrain());
         targetStartPos = target.position;
         moverStartPos = mover.position;
+        if (postProcessVolume.profile.TryGet<LensDistortion>(out LensDistortion ld))
+        {
+            lensDistortion = ld;
+        }
     }
 
     void Update()
     {
+        if (lensDistortion != null)
+        {
+            if (isPoisoned)
+            {
+                targetWarbleIntensity = Mathf.Sin(Time.time * warbleSpeed) * intensity;
+                currentWarbleIntensity = Mathf.Lerp(currentWarbleIntensity, targetWarbleIntensity, Time.deltaTime * warbleSmoothness);
+                lensDistortion.intensity.value = currentWarbleIntensity;
+            }
+            else
+            {
+                lensDistortion.intensity.value = 0f; 
+            }
+        }
         if (isReturning) return; 
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -74,7 +102,7 @@ public class PlayerController : MonoBehaviour
             MoveTarget();
         }
 
-        
+
     }
     IEnumerator HungerDrain()
     {
@@ -155,10 +183,10 @@ public class PlayerController : MonoBehaviour
         {
             score += caughtEnemy.GetComponent<EnemyHandler>().scoreValue;
             scoreText.text = $"Score: {score}";
+            enemySpawner.playerScore+=caughtEnemy.GetComponent<EnemyHandler>().scoreValue;
             Destroy(caughtEnemy);
             caughtEnemy = null;
             hungerLevel += 2.5f;
-            enemySpawner.enemiesKilled++;
             if (hungerLevel>10)
                 hungerLevel=10f;
             ateWhilePoisoned++;

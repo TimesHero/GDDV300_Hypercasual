@@ -39,7 +39,6 @@ public class TongueCollider2D : MonoBehaviour
         }
 
     }
-
     private void SetupMinigame(BossMovementScript boss)
     {
         currentBoss = boss;
@@ -59,8 +58,6 @@ public class TongueCollider2D : MonoBehaviour
         minigameActive = true;
         StartCoroutine(CriticalHitRoutine());
     }
-
-
     private IEnumerator CriticalHitRoutine()
     {
         while (minigameActive)
@@ -78,8 +75,6 @@ public class TongueCollider2D : MonoBehaviour
             yield return null; 
         }
     }
-
-
     private void MoveTarget()
     {
         float delta = targetSpeed * Time.unscaledDeltaTime;
@@ -120,16 +115,14 @@ public class TongueCollider2D : MonoBehaviour
         criticalBar.SetActive(false);
         Time.timeScale = 1f;
 
-        // Deal damage
         if (success)
         {
-            currentBoss.TakeDamage(3); 
+            currentBoss.TakeDamage(500); 
         }
         else
         {
-            currentBoss.TakeDamage(1); 
+            currentBoss.TakeDamage(250); 
         }
-
         playerController.bossHit = true;
     }
 }
