@@ -5230,7 +5230,7 @@ MonoBehaviour:
   velocity: 2
   secondsTilSpawn: 1
   waveSpawnRateModifier: 1
-  currentWave: 3
+  currentWave: 1
   wavePopupText: {fileID: 1225010847}
   warningObject: {fileID: 300151528}
 --- !u!1 &1877331666
