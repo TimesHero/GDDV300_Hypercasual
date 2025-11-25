@@ -92,3 +92,5 @@ crashlytics-build.properties
 # To prevent more unwanted files in the project
 *.log
 
+
+.utmp/
