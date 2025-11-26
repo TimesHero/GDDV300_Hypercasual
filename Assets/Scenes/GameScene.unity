@@ -5281,7 +5281,7 @@ MonoBehaviour:
   bossPrefab: {fileID: 1324533738088508812, guid: 1891635598ccd74499581ff1c1c6dfca, type: 3}
   progressionSlider: {fileID: 145954940}
   scoreThreshold: 2000
-  playerScore: 1900
+  playerScore: 0
   spawnLocations:
   - {fileID: 1636861011}
   - {fileID: 1638293746}
