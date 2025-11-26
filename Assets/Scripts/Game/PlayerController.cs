@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
             isHolding = false;
             mover.position = target.position;  
             StartCoroutine(ReturnToStart());
+            AudioManager.Instance.PlaySound("frogTongue");
         }
 
         if (isHolding)
@@ -195,11 +196,20 @@ public class PlayerController : MonoBehaviour
                 isPoisoned=false;
                 ateWhilePoisoned=0;
             }
+            if (!isPoisoned)
+            {
+                AudioManager.Instance.PlaySound("frogEat");
+            }
+            else
+            {
+                AudioManager.Instance.PlaySound("frogPoisoned");
+            }
         }
         else if (bossHit)
         {
             hungerLevel = 10f;
         }
+        else AudioManager.Instance.PlaySound("frogMiss");
         t = 0f;
         direction = 1;
         isReturning = false;
