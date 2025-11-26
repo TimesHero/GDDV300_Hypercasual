@@ -77,7 +77,8 @@ public class EnemySpawner : MonoBehaviour
     {
         if (wavePopupText != null)
         {
-            wavePopupText.text = "Wave " + waveNumber;
+            if (waveNumber>=2)
+                wavePopupText.text = "Wave " + waveNumber;
             wavePopupText.gameObject.SetActive(true);
             StartCoroutine(HidePopupAfterDelay(2f));
         }
