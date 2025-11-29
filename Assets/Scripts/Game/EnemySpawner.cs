@@ -9,13 +9,11 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject[] enemyPrefabs;
     public GameObject bossPrefab;
-    public Slider progressionSlider;
+    public Transform[] spawnLocations;
+    public Transform bossSpawn;
 
     public int scoreThreshold = 2000;
     public int playerScore;
-
-    public Transform[] spawnLocations;
-    public Transform bossSpawn;
 
     public float velocity;
     public float secondsTilSpawn;
@@ -29,21 +27,44 @@ public class EnemySpawner : MonoBehaviour
     private float[] spawnWeights;
 
     public TextMeshProUGUI wavePopupText;
-    public GameObject warningObject;  
+    public GameObject warningObject;
 
-    private List<GameObject> currentEnemies = new List<GameObject>(); 
+    private List<GameObject> currentEnemies = new List<GameObject>();
+    public Image progressionImage;  
+    public Animator shadowAnimator;
+    private bool stage1Triggered = false;
+    private bool stage2Triggered = false;
+    public Animator bossHP;
 
     void Start()
     {
         spawnWeights = new float[] { 0.75f, 0.25f };
         StartCoroutine(SpawnTimer());
         ShowWavePopup(currentWave);
+        if (progressionImage != null)
+            progressionImage.fillAmount = 0f;
     }
 
     void Update()
     {
         if (!bossWave)
-            progressionSlider.value = playerScore;
+        {
+            if (progressionImage != null)
+                progressionImage.fillAmount = Mathf.Clamp01((float)playerScore / scoreThreshold);
+        }
+        float progress = (float)playerScore / scoreThreshold;
+
+        if (progress >= 1f / 3f && !stage1Triggered)
+            {
+                shadowAnimator.SetTrigger("Stage1");
+                stage1Triggered = true; 
+        }
+
+        if (progress >= 2f / 3f && !stage2Triggered)
+        {
+            shadowAnimator.SetTrigger("Stage2");
+            stage2Triggered = true; 
+        }
 
         if (playerScore >= scoreThreshold)
         {
@@ -66,7 +87,12 @@ public class EnemySpawner : MonoBehaviour
     public void DefeatedBoss()
     {
         currentWave++;
-        progressionSlider.value = 0;
+        stage1Triggered = false;
+        stage2Triggered = false;
+        bossHP.SetTrigger("RemoveBar");
+        if (progressionImage != null)
+            progressionImage.fillAmount = 0f;
+
         bossWave = false;
         velocity += 0.5f;
         secondsTilSpawn += 0.5f;
@@ -77,8 +103,9 @@ public class EnemySpawner : MonoBehaviour
     {
         if (wavePopupText != null)
         {
-            if (waveNumber>=2)
+            if (waveNumber >= 2)
                 wavePopupText.text = "Wave " + waveNumber;
+
             wavePopupText.gameObject.SetActive(true);
             StartCoroutine(HidePopupAfterDelay(2f));
         }
@@ -134,41 +161,44 @@ public class EnemySpawner : MonoBehaviour
             spawnPoint.rotation
         );
 
-        currentEnemies.Add(enemy); 
+        currentEnemies.Add(enemy);
 
         Vector3 spawnDirection = spawnPoint.position.x > 0f ? Vector3.left : Vector3.right;
 
         var handler = enemy.GetComponent<EnemyHandler>();
-        handler.SetVelocity(spawnDirection * velocity);
+        float finalVelocity = (selectedEnemy == poisonIndex) ? velocity * 0.5f : velocity;
+
+        handler.SetVelocity(spawnDirection * finalVelocity);
     }
 
     private IEnumerator StartWarningSequence()
     {
+        shadowAnimator.SetTrigger("Reset");
+        bossHP.SetTrigger("TriggerBar");
+        CameraShake shake = Camera.main.GetComponent<CameraShake>();
+        shake.Shake(0.2f, 0.15f); 
         MoveEnemiesOffScreen();
         if (warningObject != null)
         {
             warningObject.SetActive(true);
-            yield return new WaitForSeconds(2f); 
+            yield return new WaitForSeconds(2f);
             warningObject.SetActive(false);
         }
         Instantiate(bossPrefab, bossSpawn.position, bossSpawn.rotation);
     }
 
     private void MoveEnemiesOffScreen()
-{
-    // Find all objects tagged with "Enemy"
-    GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-    // Loop through each enemy and call the Leave() method
-    foreach (GameObject enemy in enemies)
     {
-        // Ensure the enemy has an EnemyHandler component before calling Leave()
-        var enemyHandler = enemy.GetComponent<EnemyHandler>();
-        if (enemyHandler != null)
+
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach (GameObject enemy in enemies)
         {
-            enemyHandler.Leave(); // Call the Leave method to move the enemy off-screen
+            var enemyHandler = enemy.GetComponent<EnemyHandler>();
+            if (enemyHandler != null)
+            {
+                enemyHandler.Leave(); 
+            }
         }
     }
-}
-
 }

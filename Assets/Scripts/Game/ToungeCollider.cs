@@ -118,10 +118,13 @@ public class TongueCollider2D : MonoBehaviour
         if (success)
         {
             currentBoss.TakeDamage(500); 
+            CameraShake shake = Camera.main.GetComponent<CameraShake>();
+            shake.Shake(0.2f, 0.15f); 
         }
         else
         {
             currentBoss.TakeDamage(250); 
+            playerController.hungerLevel-=1f;
         }
         playerController.bossHit = true;
     }

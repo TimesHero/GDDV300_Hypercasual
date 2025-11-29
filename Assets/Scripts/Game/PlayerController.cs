@@ -57,6 +57,11 @@ public class PlayerController : MonoBehaviour
     public EnemySpawner enemySpawner;
     void Start()
     {
+        if (SkinManager.Instance != null && SkinManager.Instance.selectedSkin != null)
+        {
+            GetComponent<SpriteRenderer>().sprite = SkinManager.Instance.selectedSkin;
+        }
+        
         Time.timeScale = 1f;
         StartCoroutine(HungerDrain());
         targetStartPos = target.position;
@@ -65,6 +70,7 @@ public class PlayerController : MonoBehaviour
         {
             lensDistortion = ld;
         }
+        AudioManager.Instance.AssignSource();
     }
 
     void Update()
@@ -207,7 +213,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (bossHit)
         {
-            hungerLevel = 10f;
+            hungerLevel += 1.5f;
         }
         else AudioManager.Instance.PlaySound("frogMiss");
         t = 0f;
@@ -256,14 +262,7 @@ public class PlayerController : MonoBehaviour
         int currentCurrency = PlayerPrefs.GetInt("SoftCurrency", 0); 
         currentCurrency += currencyEarned;
         PlayerPrefs.SetInt("SoftCurrency", currentCurrency);
-            PlayerPrefs.Save();
-
-        //DEBUG TESTING
-        Debug.Log("Final Top 5 Scores:");
-        for (int i = 0; i < topScores.Count; i++)
-        {
-            Debug.Log($"{i + 1}: {topScores[i]}");
-        }
+        PlayerPrefs.Save();
 }
 
 

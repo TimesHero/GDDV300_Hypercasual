@@ -21,8 +21,12 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
         DontDestroyOnLoad(gameObject);
+    }
+    public void AssignSource()
+    {
+        GameObject player = GameObject.FindWithTag("Player"); 
+        PlayerAS = player.GetComponent<AudioSource>();
     }
 
     public void PlaySound(string clipName)

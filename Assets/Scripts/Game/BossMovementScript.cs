@@ -31,7 +31,8 @@ public class BossMovementScript : MonoBehaviour
         currentHP = maxHP;
         GameObject progressBarObject = GameObject.FindGameObjectWithTag("ProgressBar");
         progress = progressBarObject.GetComponent<Slider>();
-         spriteRenderer = GetComponent<SpriteRenderer>();
+        progress.value = maxHP;
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         transform.localScale = Vector3.one * startScale;
         Color color = spriteRenderer.color;
