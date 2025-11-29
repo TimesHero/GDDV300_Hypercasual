@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Slider = UnityEngine.UI.Slider;
 public class BossMovementScript : MonoBehaviour
 {
     public Animator animator; 
@@ -103,7 +105,7 @@ public class BossMovementScript : MonoBehaviour
         progress.value = currentHP;
         if (currentHP <= 0)
         {
-            Die();
+            Leave();
             return;
         }
         moveSpeed += speedIncrease;
@@ -115,9 +117,10 @@ public class BossMovementScript : MonoBehaviour
         yield return new WaitForSeconds(stunDuration);
         isStunned = false;
     }
-
-
-
+     public void Leave()
+    {
+        animator.SetBool("Die", true);
+    }
     void Die()
     {
         Debug.Log("Boss defeated!");

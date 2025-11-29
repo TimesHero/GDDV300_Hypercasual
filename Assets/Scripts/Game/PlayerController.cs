@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
     public bool bossHit = false;
     private int ateWhilePoisoned = 0;
     public EnemySpawner enemySpawner;
+    public GameObject poisonEyes; 
     void Start()
     {
         if (SkinManager.Instance != null && SkinManager.Instance.selectedSkin != null)
@@ -79,12 +80,14 @@ public class PlayerController : MonoBehaviour
         {
             if (isPoisoned)
             {
+                poisonEyes.SetActive(true);
                 targetWarbleIntensity = Mathf.Sin(Time.time * warbleSpeed) * intensity;
                 currentWarbleIntensity = Mathf.Lerp(currentWarbleIntensity, targetWarbleIntensity, Time.deltaTime * warbleSmoothness);
                 lensDistortion.intensity.value = currentWarbleIntensity;
             }
             else
             {
+                poisonEyes.SetActive(false);
                 lensDistortion.intensity.value = 0f; 
             }
         }
