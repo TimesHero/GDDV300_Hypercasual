@@ -5647,7 +5647,7 @@ MonoBehaviour:
   - {fileID: 1390260980}
   bossSpawn: {fileID: 56640223}
   scoreThreshold: 2000
-  playerScore: 1900
+  playerScore: 0
   velocity: 2
   secondsTilSpawn: 1
   waveSpawnRateModifier: 1
