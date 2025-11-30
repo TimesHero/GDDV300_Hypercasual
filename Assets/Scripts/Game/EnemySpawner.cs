@@ -35,6 +35,9 @@ public class EnemySpawner : MonoBehaviour
     private bool stage1Triggered = false;
     private bool stage2Triggered = false;
     public Animator bossHP;
+    public SpriteRenderer dayBackground;
+    public SpriteRenderer eveningBackground;
+    public SpriteRenderer nightBackground;
 
     void Start()
     {
@@ -64,13 +67,17 @@ public class EnemySpawner : MonoBehaviour
         {
             shadowAnimator.SetTrigger("Stage2");
             stage2Triggered = true; 
+            StartCoroutine(FadeBackground(dayBackground, 0f, 2f));
+            StartCoroutine(FadeBackground(eveningBackground, 1f, 2f));
         }
 
         if (playerScore >= scoreThreshold)
         {
             playerScore = 0;
             bossWave = true;
-            StartCoroutine(StartWarningSequence()); // Start warning sequence before boss spawn
+            StartCoroutine(FadeBackground(eveningBackground, 0f, 2f));
+            StartCoroutine(FadeBackground(nightBackground, 1f, 2f)); 
+            StartCoroutine(StartWarningSequence()); 
         }
     }
 
@@ -87,6 +94,8 @@ public class EnemySpawner : MonoBehaviour
     public void DefeatedBoss()
     {
         currentWave++;
+        StartCoroutine(FadeBackground(nightBackground, 0f, 2f));
+        StartCoroutine(FadeBackground(dayBackground, 1f, 2f));
         stage1Triggered = false;
         stage2Triggered = false;
         bossHP.SetTrigger("RemoveBar");
@@ -201,4 +210,21 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
+    private IEnumerator FadeBackground(SpriteRenderer targetBackground, float targetAlpha, float duration)
+    {
+        Color startColor = targetBackground.color;
+        Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+
+        float timeElapsed = 0f;
+
+        while (timeElapsed < duration)
+        {
+            targetBackground.color = Color.Lerp(startColor, targetColor, timeElapsed / duration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        targetBackground.color = targetColor;
+    }
+    
 }
