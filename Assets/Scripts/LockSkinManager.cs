@@ -6,6 +6,8 @@ public class LockSkinManager : MonoBehaviour
     public TextMeshProUGUI softCurrencyText;
     public int[] currencyNeeded; 
     public GameObject[] skinButtons;
+    public GameObject[] unlockButtons;
+    public GameObject startSkin;
 
     void Start()
     {
@@ -21,10 +23,10 @@ public class LockSkinManager : MonoBehaviour
         if (PlayerPrefs.GetInt("SkinUnlocked_" + skinIndex, 0) == 1)
         {
             skinButtons[skinIndex].SetActive(true);
+            unlockButtons[skinIndex].SetActive(false);
             return;
         }
 
-        // Not enough money
         if (softCurrency < cost)
         {
             Debug.Log("Not enough soft currency!");
@@ -35,7 +37,7 @@ public class LockSkinManager : MonoBehaviour
         PlayerPrefs.SetInt("SoftCurrency", softCurrency);
         PlayerPrefs.SetInt("SkinUnlocked_" + skinIndex, 1);
         skinButtons[skinIndex].SetActive(true);
-
+        unlockButtons[skinIndex].SetActive(false);
         RefreshCurrencyUI();
 
         Debug.Log("Unlocked skin " + skinIndex);
@@ -53,6 +55,8 @@ public class LockSkinManager : MonoBehaviour
             bool unlocked = PlayerPrefs.GetInt("SkinUnlocked_" + i, 0) == 1;
 
             skinButtons[i].SetActive(unlocked);
+            unlockButtons[i].SetActive(!unlocked);
         }
+        startSkin.SetActive(true);
     }
 }

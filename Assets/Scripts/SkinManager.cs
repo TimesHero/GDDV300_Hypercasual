@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class SkinManager : MonoBehaviour
 {
     public static SkinManager Instance;
     public Sprite selectedSkin;
+
+    private Button currentSelectedButton;
 
     private void Awake()
     {
@@ -19,18 +20,24 @@ public class SkinManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public void SelectSkinFromButton(Button button)
     {
+        if (button == null) return;
+
         Image img = button.GetComponent<Image>();
 
         if (img != null)
         {
             selectedSkin = img.sprite;
             Debug.Log("Selected skin: " + img.sprite.name);
-        }
-        else
-        {
-            Debug.LogError("Button has no Image component!");
+            if (currentSelectedButton != null && currentSelectedButton != button)
+            {
+                currentSelectedButton.interactable = true;
+            }
+            button.interactable = false;
+
+            currentSelectedButton = button;
         }
     }
 }

@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
         gameOverPanel.SetActive(true);
         endScore.text = $"Score: {score}";
         int currencyEarned = score / 10;
-        endCurrency.text = $"Soft Currency Earned: {currencyEarned}";
+        endCurrency.text = $"Fireflies Earned: {currencyEarned}";
         List<int> topScores = new List<int>();
         for (int i = 0; i < 5; i++)
         {
