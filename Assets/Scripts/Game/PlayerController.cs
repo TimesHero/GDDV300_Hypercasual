@@ -55,7 +55,9 @@ public class PlayerController : MonoBehaviour
     public bool bossHit = false;
     private int ateWhilePoisoned = 0;
     public EnemySpawner enemySpawner;
-    public GameObject poisonEyes; 
+    public GameObject poisonEyes;
+
+    public AudioSource splatSfx;
     void Start()
     {
         if (SkinManager.Instance != null && SkinManager.Instance.selectedSkin != null)
@@ -277,6 +279,7 @@ public class PlayerController : MonoBehaviour
             Animator anim = caughtEnemy.GetComponent<Animator>();
             anim.enabled = false;
             caughtEnemy.transform.SetParent(mover, true); // Keep world scale
+            splatSfx.Play();
 
 
             if (caughtEnemy.GetComponent<EnemyHandler>().applyPoison)
